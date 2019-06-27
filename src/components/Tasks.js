@@ -13,9 +13,9 @@ const FEED_QUERY = gql`
     }
 `
 
-function Tasks() {
+function Tasks({lastUpdate}) {
     return (
-        <Query query={FEED_QUERY}>
+        <Query query={FEED_QUERY} variables={{lastUpdate}} fetchPolicy="cache-and-network">
         {({ loading, error, data }) => {
         if (loading) return <div>Fetching</div>
         if (error) return <div>Error</div>

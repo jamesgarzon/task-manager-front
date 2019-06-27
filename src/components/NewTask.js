@@ -31,8 +31,20 @@ class NewTask extends Component {
                     <textarea placeholder="Contenido..."
                         value={description}
                         onChange={e => this.setState({ description: e.target.value })} />
-                    <Mutation mutation={POST_MUTATION} variables={{ title, description }}>
-                        {postMutation => <button onClick={postMutation}>Submit</button>}
+                    <Mutation
+                        mutation={POST_MUTATION}
+                        variables={{ title, description }}
+                        update={() =>
+                            this.props.updateTaskList()
+                        }
+                    >
+                        {postMutation => <button onClick={ () =>{
+                            this.setState({
+                                title: '',
+                                description: '',
+                            })
+                            postMutation();
+                        } }>Submit</button>}
                     </Mutation>
                 </div>
             </div>
