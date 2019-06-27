@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 
 const POST_MUTATION = gql`
-    mutation post( $title: String!, $description: String!) {
-        post(title: $title, description: $description) {
+    mutation createTask( $title: String!, $description: String) {
+        createTask(title: $title, description: $description) {
             id
             title
             description
@@ -18,7 +18,7 @@ class NewTask extends Component {
         description: '',
     }
 
-    render(){
+    render() {
         const { title, description } = this.state
         return (
             <div className="app__new-task">
@@ -27,17 +27,12 @@ class NewTask extends Component {
                         type="text"
                         placeholder="Título..."
                         value={title}
-                        onChange={e => this.setState({ title: e.target.value })}/>
+                        onChange={e => this.setState({ title: e.target.value })} />
                     <textarea placeholder="Contenido..."
-                              value={description}
-                              onChange={e => this.setState({ description: e.target.value })}/>
-
+                        value={description}
+                        onChange={e => this.setState({ description: e.target.value })} />
                     <Mutation mutation={POST_MUTATION} variables={{ title, description }}>
-                        {() => (
-                            <Mutation mutation={POST_MUTATION} variables={{ title, description }}>
-                                {postMutation => <button onClick={postMutation}>Submit</button>}
-                            </Mutation>
-                        )}
+                        {postMutation => <button onClick={postMutation}>Submit</button>}
                     </Mutation>
                 </div>
             </div>

@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 
 const FEED_QUERY = gql`
     {
-        tasks {
+        allTasks {
             id
             title
             description
@@ -20,7 +20,7 @@ function Tasks() {
         if (loading) return <div>Fetching</div>
         if (error) return <div>Error</div>
 
-        const tasks = data.tasks;
+        const tasks = data.allTasks;
 
         return (
             <div className="app__task-list">
