@@ -5,9 +5,10 @@ import NewTask from "./NewTask";
 
 
 class App extends Component{
+
     state = {
         lastUpdate: new Date()
-    }
+    };
 
     updateTaskList = () => {
         console.log('update!!');
@@ -19,7 +20,9 @@ class App extends Component{
             <div className="app__container">
                 <h1 className="app__title">Tasks</h1>
                 <NewTask updateTaskList={this.updateTaskList}/>
-                <Tasks  lastUpdate={this.state.lastUpdate} onDeleteTask={this.updateTaskList}/>
+                <Tasks
+                    lastUpdate={this.state.lastUpdate}
+                    onDeleteTask={this.updateTaskList}/>
             </div>
         );
     }
