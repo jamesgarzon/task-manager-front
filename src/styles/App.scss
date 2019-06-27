@@ -1,11 +1,13 @@
 $grey: #666;
 $lightGrey: #e6e6e6;
-
+$primary: #e00482;
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  outline: 0;
 }
+
 
 html {
   font-family: Helvetica, sans-serif;
@@ -15,12 +17,13 @@ html {
 
 .app {
   &__container {
-
+    background-color: #f9f9f9;
   }
 
   &__title {
     padding: 1.3rem;
-    background-color: $lightGrey;
+    background-color: $primary;
+    color: white;
     font-size: 2em;
   }
 
@@ -36,6 +39,7 @@ html {
       padding: 0.5rem;
       border-radius: 10px;
       position: relative;
+      background-color: white;
 
       input, textarea, button {
         display: block;
@@ -57,10 +61,10 @@ html {
         position: absolute;
         right: 0.6rem;
         bottom: 0.6rem;
-        width: 70px;
-        background-color: $grey;
+        width: 90px;
+        background-color: $primary;
         color: white;
-        border-radius: 20px;
+        border-radius: 10px;
       }
     }
 
@@ -82,6 +86,7 @@ html {
       border-radius: 10px;
       margin: 0.5rem;
       position: relative;
+      background-color: white;
       h4 {
 
       }
