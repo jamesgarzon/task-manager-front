@@ -22,9 +22,14 @@ html {
 
   &__title {
     padding: 1.3rem;
-    background-color: $primary;
+    background-color: #e00482;
     color: white;
     font-size: 2em;
+    background-image: url(/graphql-logo.png);
+    background-size: auto 80%;
+    background-position-x: 98%;
+    background-position-y: center;
+    background-repeat: no-repeat;
   }
 
   &__new-task {
