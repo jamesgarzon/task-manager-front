@@ -11,9 +11,10 @@ const FEED_QUERY = gql`
             description
         }
     }
-`
+`;
 
-function Tasks({lastUpdate}) {
+
+function Tasks({lastUpdate, onDeleteTask}) {
     return (
         <Query query={FEED_QUERY} variables={{lastUpdate}} fetchPolicy="cache-and-network">
         {({ loading, error, data }) => {
@@ -24,12 +25,21 @@ function Tasks({lastUpdate}) {
 
         return (
             <div className="app__task-list">
-                {tasks.map(task => <TaskItem key={task.id} task={task} />)}
+                {tasks.map(task =>
+                    <TaskItem
+                        key={task.id}
+                        task={task}
+                        onDeletedTask={onDeleteTask}/>
+                    )}
             </div>
         )
         }}
     </Query>
     )
+}
+
+function onDeletedTask() {
+
 }
 
 export default  Tasks;

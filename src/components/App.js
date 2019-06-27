@@ -19,7 +19,7 @@ class App extends Component{
             <div className="app__container">
                 <h1 className="app__title">Tasks</h1>
                 <NewTask updateTaskList={this.updateTaskList}/>
-                <Tasks  lastUpdate={this.state.lastUpdate}/>
+                <Tasks  lastUpdate={this.state.lastUpdate} onDeleteTask={this.updateTaskList}/>
             </div>
         );
     }
