@@ -7,14 +7,13 @@ const DELETE_TASK = gql`
         deleteTask(id: $id)
     }
 `
-function TaskItem({ task, onDeletedTask }) {
+function TaskItem({ task }) {
     return (
         <article style={{ textDecoration: task.checked && 'line-through' }}>
             <h4>{task.title}</h4>
             <p>{task.description}</p>
             <Mutation mutation={DELETE_TASK}
-                      variables={{ id: task.id }}
-            update={onDeletedTask}>
+                      variables={{ id: task.id }}>
                 {postMutation => <button onClick={postMutation}>x</button>}
             </Mutation>
         </article>

@@ -13,14 +13,64 @@ const FEED_QUERY = gql`
     }
 `;
 
+const NEW_TASK_SUBSCRIPTION = gql`
+    subscription {
+        newTask {
+            id
+            title
+            description
+        }
+    }
+`;
 
-function Tasks({lastUpdate, onDeleteTask}) {
+const DELETE_TASK_SUBSCRIPTION = gql`
+    subscription {
+        removeTask
+    }
+`
+
+
+function Tasks({onDeleteTask}) {
+
+    const _subscribeToNewTasks = subscribeToMore => {
+        subscribeToMore({
+            document: NEW_TASK_SUBSCRIPTION,
+            updateQuery: (prev, { subscriptionData }) => {
+                if (!subscriptionData.data) return prev;
+                const newTask = subscriptionData.data.newTask
+                const exists = prev.allTasks.find(({ id }) => id === newTask.id);
+                if (exists) return prev;
+                return Object.assign({}, prev, {
+                    allTasks: [
+                        newTask, ...prev.allTasks
+                    ]
+                })
+            }
+        })
+    };
+
+    const _subscribeToDeletedTask = subscribeToDeletedTask => {
+        subscribeToDeletedTask({
+            document: DELETE_TASK_SUBSCRIPTION,
+            updateQuery: (prev, { subscriptionData }) => {
+                if (!subscriptionData.data) return prev
+                const deletedTask = subscriptionData.data;
+                console.log('deleteTask', deletedTask.removeTask);
+                return Object.assign({}, prev, {
+                    allTasks: prev.allTasks.filter( task => task.id !== deletedTask.removeTask)
+                })
+            }
+        })
+    };
+
     return (
-        <Query query={FEED_QUERY} variables={{lastUpdate}} fetchPolicy="cache-and-network">
-        {({ loading, error, data }) => {
-        if (loading) return <div>Fetching</div>
-        if (error) return <div>Error</div>
+        <Query query={FEED_QUERY} fetchPolicy="cache-and-network">
+        {({ loading, error, data, subscribeToMore }) => {
+        if (loading) return <div>Fetching</div>;
+        if (error) return <div>Error</div>;
 
+        _subscribeToNewTasks(subscribeToMore);
+        _subscribeToDeletedTask(subscribeToMore);
         const tasks = data.allTasks;
 
         return (
@@ -29,7 +79,8 @@ function Tasks({lastUpdate, onDeleteTask}) {
                     <TaskItem
                         key={task.id}
                         task={task}
-                        onDeletedTask={onDeleteTask}/>
+                        // onDeletedTask={onDeleteTask}
+                    />
                     )}
             </div>
         )
